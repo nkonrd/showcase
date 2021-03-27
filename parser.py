@@ -1,7 +1,8 @@
 import os
 import sqlite3
 
-folder = r"D:\Archive\Movies"
+folder = r""
+dbfile = ""
 movies = [movie for movie in os.listdir(folder) if "(" in movie]
 
 fields = []
@@ -10,10 +11,10 @@ for movie in movies:
 
 fields.sort(key = lambda t: t[0])
 
-if os.path.isfile('movies.db'):
-	os.remove('movies.db')
+if os.path.isfile(dbfile):
+	os.remove(dbfile)
 
-connection = sqlite3.connect('movies.db')
+connection = sqlite3.connect(dbfile)
 cursor = connection.cursor()
 
 cursor.execute("CREATE TABLE movies (name text, year int)")

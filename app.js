@@ -5,7 +5,7 @@ const fs = require('fs')
 const ejs = require('ejs')
 
 let port = 8080;
-let dbf = "./movies.db"
+let dbf = ""
 let db = new sqlite.Database(dbf)
 
 var movies = []
