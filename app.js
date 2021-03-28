@@ -1,15 +1,13 @@
 const express = require('express')
-const app = express()
 const sqlite = require('sqlite3')
-const fs = require('fs')
 const ejs = require('ejs')
 
 let port = 8080;
-let dbf = ""
-let db = new sqlite.Database(dbf)
+let db = new sqlite.Database("")
+const app = express()
 
 var movies = []
-db.all('SELECT * FROM movies', async (err, result) => {
+db.all('SELECT * FROM movies', (err, result) => {
      result.forEach(movie => {movies.push(movie)})
 })
 db.close()
