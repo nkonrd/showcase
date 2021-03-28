@@ -10,7 +10,7 @@ let db = new sqlite.Database(dbf)
 
 var movies = []
 db.all('SELECT * FROM movies', async (err, result) => {
-     result.forEach(async movie => {movies.push(movie)})
+     result.forEach(movie => {movies.push(movie)})
 })
 db.close()
 
