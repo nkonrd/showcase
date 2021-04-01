@@ -1,27 +1,36 @@
-const express = require('express')
-const sqlite = require('sqlite3')
-const ejs = require('ejs')
+const Koa = require('koa');
+const Router = require('koa-router');
+const render = require('koa-ejs');
+const sqlite = require('sqlite3');
+const fs = require('fs');
+const path = require('path');
 
-let port = 8080;
-let db = new sqlite.Database("")
-const app = express()
+const port = 8080;
+const db = new sqlite.Database('movies.db');
 
-var movies = []
+const app = new Koa();
+const router = new Router();
+
+let movies = []
 db.all('SELECT * FROM movies', (err, result) => {
-     result.forEach(movie => {movies.push(movie)})
+     result.forEach(movie => {movies.push(movie)});
 })
-db.close()
+db.close();
 
-app.use(express.static(__dirname))
-app.set('view engine', 'ejs');
+app.use(require('koa-static')(__dirname));
+render(app, {
+	root: path.join(__dirname, 'views')
+});
 
-app.get('/', (req, res) => {
-    res.render('index', {movies: movies})
+router.get('/', async ctx => {
+    await ctx.render('index', {movies: movies})
 })
 
-app.get('/gallery', (req, res) => {
-    res.render('gallery', {movies: movies})
+router.get('/gallery', async ctx => {
+    await ctx.render('gallery', {movies: movies})
 })
+
+app.use(router.routes()).use(router.allowedMethods());
 
 app.listen(port, () => {
     console.log(`Listening on ${port}`)

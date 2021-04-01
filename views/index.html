@@ -1,0 +1,18 @@
+<table class="table">
+	<thead>
+	  <tr>
+		<th scope="col"></th>
+		<th scope="col">nimi</th>
+		<th scope="col">vuosi</th>
+	  </tr>
+	</thead>
+	<tbody>
+	  <% movies.forEach(movie => { %>
+		<tr>
+		  <td><img height=200 src=<%="wiki/"+movie.name.toLowerCase().split(" ").join("+")+".png"%>></td>
+		  <td><%= movie.name %></td>
+		  <td><%= movie.year %></td>
+		</tr>
+	  <% }) %>
+	</tbody>
+  </table>
